@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>György Richárd Bogár</title>
+  <meta name="description" content="György Richárd Bogár — PhD Student at Budapest University of Technology and Economics.">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f7f8fa;
+      --text: #1a1d21;
+      --muted: #5c6570;
+      --accent: #2563eb;
+      --border: #e4e7eb;
+      --max-width: 760px;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #14171a;
+        --surface: #1c2024;
+        --text: #e6e8ea;
+        --muted: #9aa4af;
+        --accent: #6ea8fe;
+        --border: #2a2f35;
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.65;
+      color: var(--text);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
+
+    /* Header */
+    header { padding: 64px 0 32px; }
+    .header-inner { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+    .avatar {
+      width: 120px; height: 120px; border-radius: 50%;
+      object-fit: cover; background: var(--surface);
+      border: 1px solid var(--border); flex-shrink: 0;
+    }
+    h1 { font-size: 2rem; margin: 0 0 6px; letter-spacing: -0.02em; }
+    .subtitle { color: var(--muted); font-size: 1.05rem; margin: 0; }
+    .affiliation { color: var(--muted); font-size: 0.95rem; margin: 4px 0 0; }
+
+    /* Nav */
+    nav {
+      position: sticky; top: 0; z-index: 10;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+    }
+    nav .container { display: flex; gap: 22px; padding-top: 14px; padding-bottom: 14px; flex-wrap: wrap; }
+    nav a { color: var(--muted); font-size: 0.92rem; font-weight: 500; }
+    nav a:hover { color: var(--text); text-decoration: none; }
+
+    /* Sections */
+    section { padding: 40px 0; border-bottom: 1px solid var(--border); }
+    section:last-of-type { border-bottom: none; }
+    h2 { font-size: 1.3rem; margin: 0 0 16px; letter-spacing: -0.01em; }
+    p { margin: 0 0 16px; }
+
+    ul.clean { list-style: none; padding: 0; margin: 0; }
+    ul.clean li { padding: 6px 0; }
+
+    .pub {
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .pub:last-child { border-bottom: none; }
+    .pub-title { font-weight: 600; }
+    .pub-meta { color: var(--muted); font-size: 0.9rem; }
+
+    .links { display: flex; flex-wrap: wrap; gap: 12px; }
+    .links a {
+      display: inline-block; padding: 8px 16px;
+      border: 1px solid var(--border); border-radius: 8px;
+      background: var(--surface); color: var(--text); font-size: 0.92rem;
+    }
+    .links a:hover { border-color: var(--accent); text-decoration: none; }
+
+    footer { padding: 32px 0 48px; color: var(--muted); font-size: 0.85rem; text-align: center; }
+
+    @media (max-width: 480px) {
+      header { padding-top: 40px; }
+      h1 { font-size: 1.6rem; }
+      .header-inner { gap: 18px; }
+      .avatar { width: 88px; height: 88px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <!-- Replace with a real photo, e.g. profile.jpg, or remove the <img> entirely -->
+      <img class="avatar" src="https://www.gravatar.com/avatar/?d=mp&s=240" alt="Photo of György Richárd Bogár">
+      <div>
+        <h1>György Richárd Bogár</h1>
+        <p class="subtitle">PhD Student</p>
+        <p class="affiliation">Budapest University of Technology and Economics</p>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="container">
+      <a href="#about">About</a>
+      <a href="#research">Research</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section id="about">
+      <h2>About</h2>
+      <p>
+        I am a PhD student at the Budapest University of Technology and Economics (BME).
+        <!-- TODO: Write a short bio. What field are you in? What broad questions
+             motivate your work? When and where did you start your PhD? -->
+        My research focuses on <em>[your research area]</em>. Previously, I completed
+        my <em>MSc and BSc </em> in <em>Electrical Engineering</em> at <em>BME</em>.
+      </p>
+    </section>
+
+    <section id="research">
+      <h2>Research Interests</h2>
+      <ul class="clean">
+        <li>• Computer Vision</li>
+        <li>• Deep Learning</li>
+        <li>• Robotics</li>
+      </ul>
+    </section>
+
+    <section id="contact">
+      <h2>Contact &amp; Links</h2>
+      <p>Feel free to reach out by email or find me on the platforms below.</p>
+      <div class="links">
+        <a href="mailto:gyrbogar@iit.bme.hu">Email</a>
+        <a href="https://github.com/bogarrichard">GitHub</a>
+        <a href="https://www.linkedin.com/in/gy%C3%B6rgy-rich%C3%A1rd-bog%C3%A1r">LinkedIn</a>
+        <!-- <a href="#">CV (PDF)</a> -->
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      © <span id="year"></span> György Richárd Bogár
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

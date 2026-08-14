@@ -1,322 +1,684 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>György Richárd Bogár</title>
   <meta name="description" content="György Richárd Bogár — PhD student at Budapest University of Technology and Economics, working on computer vision, deep learning and robotics for autonomous vehicles.">
+  <meta name="theme-color" content="#f8f6f1">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- DM Sans carries the Latin text (Zen Kaku Gothic New has no ő/ű, which
+       Hungarian needs); Zen Kaku Gothic New picks up the Japanese. -->
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300..500&family=Zen+Kaku+Gothic+New:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <script>
+    /* Resolve theme and language before first paint, so nothing flashes. */
+    (function () {
+      var t;
+      try { t = localStorage.getItem("theme"); } catch (e) {}
+      if (t !== "light" && t !== "dark") {
+        t = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+      document.documentElement.dataset.theme = t;
+
+      var l;
+      try { l = localStorage.getItem("lang"); } catch (e) {}
+      if (l !== "en" && l !== "hu" && l !== "ja") {
+        var n = (navigator.language || "en").slice(0, 2).toLowerCase();
+        l = (n === "hu" || n === "ja") ? n : "en";
+      }
+      document.documentElement.lang = l;
+    })();
+  </script>
+
   <style>
     :root {
-      --bg: #ffffff;
-      --surface: #f7f8fa;
-      --text: #1a1d21;
-      --muted: #5c6570;
-      --accent: #2563eb;
-      --border: #e4e7eb;
-      --max-width: 760px;
+      --bg: #f8f6f1;
+      --surf: #eeeae0;
+      --text: #1b1a17;
+      --muted: #79746a;
+      --line: #e2ddd1;
+      --acc: #6d8259;
+      --acc2: #8a6a4b;
+      --col: 620px;
     }
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #14171a;
-        --surface: #1c2024;
-        --text: #e6e8ea;
-        --muted: #9aa4af;
-        --accent: #6ea8fe;
-        --border: #2a2f35;
-      }
+    html[data-theme="dark"] {
+      --bg: #211b16;
+      --surf: #2c251e;
+      --text: #ece5da;
+      --muted: #9c9186;
+      --line: #3a3128;
+      --acc: #a2b98a;
+      --acc2: #bd9a76;
     }
+
     * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
+
     body {
       margin: 0;
-      font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-      line-height: 1.65;
-      color: var(--text);
+      padding: 0 32px 96px;
+      min-height: 100vh;
       background: var(--bg);
+      color: var(--text);
+      font-family: "DM Sans", "Zen Kaku Gothic New", sans-serif;
       -webkit-font-smoothing: antialiased;
+      transition: background 0.45s ease, color 0.45s ease;
     }
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
-    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 20px; }
 
-    /* Header */
-    header { padding: 64px 0 32px; }
-    .header-inner { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; }
+    a { color: var(--acc); text-decoration: none; transition: color 0.2s ease; }
+    a:hover { color: var(--acc2); }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: none; }
+    }
+
+    /* ---------- controls ---------- */
+
+    .controls {
+      max-width: var(--col);
+      margin: 0 auto;
+      padding: 28px 0 0;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+    }
+    .langs {
+      display: flex;
+      gap: 2px;
+      padding: 3px;
+      border-radius: 999px;
+      background: var(--surf);
+    }
+    .langs button {
+      font: 500 11px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.1em;
+      padding: 7px 12px;
+      border: 0;
+      border-radius: 999px;
+      background: none;
+      color: var(--muted);
+      cursor: pointer;
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+    .langs button:hover { color: var(--text); }
+    .langs button[aria-pressed="true"] { background: var(--bg); color: var(--text); }
+
+    .theme {
+      font: 400 11px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.1em;
+      padding: 8px 13px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: none;
+      color: var(--muted);
+      cursor: pointer;
+      transition: color 0.25s ease, border-color 0.25s ease;
+    }
+    .theme:hover { color: var(--text); border-color: var(--acc); }
+
+    :is(.langs button, .theme):focus-visible {
+      outline: 2px solid var(--acc);
+      outline-offset: 2px;
+    }
+
+    /* ---------- column ---------- */
+
+    .col {
+      max-width: var(--col);
+      margin: 0 auto;
+      padding-top: 68px;
+      display: flex;
+      flex-direction: column;
+      gap: 76px;
+      animation: riseIn 0.7s ease both;
+    }
+
+    .intro { display: flex; align-items: center; gap: 32px; }
     .avatar {
-      width: 120px; height: 120px; border-radius: 50%;
-      object-fit: cover; background: var(--surface);
-      border: 1px solid var(--border); flex-shrink: 0;
+      width: 104px;
+      height: 104px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: 50% 22%;
+      display: block;
+      background: var(--surf);
     }
-    h1 { font-size: 2rem; margin: 0 0 6px; letter-spacing: -0.02em; }
-    .subtitle { color: var(--muted); font-size: 1.05rem; margin: 0; }
-    .affiliation { color: var(--muted); font-size: 0.95rem; margin: 4px 0 0; }
-
-    /* Nav */
-    nav {
-      position: sticky; top: 0; z-index: 10;
-      background: color-mix(in srgb, var(--bg) 88%, transparent);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--border);
+    .intro > div { display: flex; flex-direction: column; gap: 12px; }
+    h1 {
+      margin: 0;
+      font-weight: 300;
+      font-size: 38px;
+      line-height: 1.18;
+      letter-spacing: 0.012em;
     }
-    nav .container { display: flex; gap: 22px; padding-top: 14px; padding-bottom: 14px; flex-wrap: wrap; }
-    nav a { color: var(--muted); font-size: 0.92rem; font-weight: 500; }
-    nav a:hover { color: var(--text); text-decoration: none; }
+    .role { margin: 0; font-size: 16px; color: var(--muted); line-height: 1.6; }
 
-    /* Sections */
-    section { padding: 40px 0; border-bottom: 1px solid var(--border); }
-    section:last-of-type { border-bottom: none; }
-    h2 { font-size: 1.3rem; margin: 0 0 16px; letter-spacing: -0.01em; }
+    section { display: flex; flex-direction: column; gap: 18px; }
+    h2 {
+      margin: 0;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
     h3 {
-      font-size: 0.95rem; font-weight: 600; color: var(--muted);
-      letter-spacing: 0.02em; margin: 26px 0 2px;
+      margin: 8px 0 -4px;
+      font: 500 11px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
     }
-    h3:first-of-type { margin-top: 0; }
-    p { margin: 0 0 16px; }
-
-    ul.clean { list-style: none; padding: 0; margin: 0; }
-    ul.clean li { padding: 6px 0; }
-
-    .pub {
-      padding: 14px 0;
-      border-bottom: 1px solid var(--border);
+    .lede {
+      margin: 0;
+      font-size: 19px;
+      font-weight: 300;
+      line-height: 1.85;
+      text-wrap: pretty;
     }
-    .pub:last-child { border-bottom: none; }
-    .pub-title { font-weight: 600; }
-    .pub-meta { color: var(--muted); font-size: 0.9rem; }
+    .note { margin: 0; font-size: 16px; font-weight: 300; line-height: 1.8; color: var(--muted); }
 
-    .links { display: flex; flex-wrap: wrap; gap: 12px; }
-    .links a {
-      display: inline-block; padding: 8px 16px;
-      border: 1px solid var(--border); border-radius: 8px;
-      background: var(--surface); color: var(--text); font-size: 0.92rem;
+    /* ---------- tags ---------- */
+
+    .tags { display: flex; flex-wrap: wrap; gap: 10px; }
+    .tags span {
+      padding: 9px 17px;
+      border-radius: 999px;
+      white-space: nowrap;
+      background: var(--surf);
+      color: var(--acc);
+      font-size: 15px;
+      font-weight: 500;
     }
-    .links a:hover { border-color: var(--accent); text-decoration: none; }
 
-    footer { padding: 32px 0 48px; color: var(--muted); font-size: 0.85rem; text-align: center; }
+    /* ---------- entries ---------- */
 
-    @media (max-width: 480px) {
-      header { padding-top: 40px; }
-      h1 { font-size: 1.6rem; }
-      .header-inner { gap: 18px; }
-      .avatar { width: 88px; height: 88px; }
+    .entries { display: flex; flex-direction: column; gap: 22px; }
+    .entry {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 20px;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+    }
+    .entry > div { display: flex; flex-direction: column; gap: 6px; }
+    .entry-title { font-size: 17px; font-weight: 500; line-height: 1.45; }
+    .entry-sub { font-size: 15px; font-weight: 300; line-height: 1.7; color: var(--muted); }
+    .entry-sub strong { font-weight: 500; color: var(--text); }
+    .entry-sub em { font-style: italic; }
+    .entry-meta {
+      font: 400 11px/1 "JetBrains Mono", monospace;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    a.entry { color: var(--text); }
+    a.entry:hover { color: var(--acc); }
+    a.entry .entry-meta { letter-spacing: 0.04em; }
+
+    /* ---------- label / value rows ---------- */
+
+    .rows { display: flex; flex-direction: column; gap: 20px; }
+    .row {
+      display: grid;
+      grid-template-columns: 132px 1fr;
+      gap: 20px;
+      align-items: baseline;
+      padding-top: 20px;
+      border-top: 1px solid var(--line);
+    }
+    .row-label {
+      font: 500 11px/1.5 "JetBrains Mono", monospace;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .row-val { font-size: 16px; font-weight: 300; line-height: 1.75; }
+
+    /* ---------- contact + footer ---------- */
+
+    .contact { display: flex; flex-wrap: wrap; gap: 24px; font-size: 16px; }
+    .contact a.subtle { color: var(--muted); }
+    .contact a.subtle:hover { color: var(--text); }
+
+    footer {
+      max-width: var(--col);
+      margin: 76px auto 0;
+      font: 400 11px/1 "JetBrains Mono", monospace;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+    }
+
+    /* ---------- japanese typography ---------- */
+
+    html[lang="ja"] h2 { text-transform: none; }
+    html[lang="ja"] .lede { font-size: 18px; line-height: 2; }
+    html[lang="ja"] .note { line-height: 1.95; }
+    html[lang="ja"] .entry-title { line-height: 1.6; }
+    html[lang="ja"] .entry-sub { line-height: 1.85; }
+
+    /* ---------- small screens ---------- */
+
+    @media (max-width: 560px) {
+      body { padding: 0 22px 72px; }
+      .col { gap: 60px; padding-top: 52px; }
+      .intro { gap: 22px; }
+      .avatar { width: 84px; height: 84px; }
+      h1 { font-size: 29px; }
+      .lede, html[lang="ja"] .lede { font-size: 17px; }
+      .entry { flex-direction: column; gap: 8px; }
+      .row { grid-template-columns: 1fr; gap: 8px; }
+      footer { margin-top: 60px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="container header-inner">
-      <!-- Replace with a real photo, e.g. profile.jpg, or remove the <img> entirely -->
-      <img class="avatar" src="https://www.gravatar.com/avatar/?d=mp&s=240" alt="Photo of György Richárd Bogár">
+
+  <div class="controls">
+    <div class="langs" role="group" aria-label="Language">
+      <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
+      <button type="button" data-set-lang="hu" aria-pressed="false">HU</button>
+      <button type="button" data-set-lang="ja" aria-pressed="false">JA</button>
+    </div>
+    <button type="button" class="theme" aria-label="Toggle dark mode">☾ / ☀</button>
+  </div>
+
+  <main class="col">
+
+    <header class="intro">
+      <img class="avatar" src="profile.jpg" width="320" height="320" alt="György Richárd Bogár">
       <div>
         <h1>György Richárd Bogár</h1>
-        <p class="subtitle">PhD Student</p>
-        <p class="affiliation">Budapest University of Technology and Economics</p>
+        <p class="role" data-i18n="role">PhD Student · Budapest University of Technology and Economics</p>
       </div>
-    </div>
-  </header>
+    </header>
 
-  <nav>
-    <div class="container">
-      <a href="#about">About</a>
-      <a href="#research">Research</a>
-      <a href="#publications">Publications</a>
-      <a href="#experience">Experience</a>
-      <a href="#education">Education</a>
-      <a href="#teaching">Teaching</a>
-      <a href="#skills">Skills</a>
-      <a href="#notes">Notes</a>
-      <a href="#contact">Contact</a>
-    </div>
-  </nav>
-
-  <main class="container">
     <section id="about">
-      <h2>About</h2>
-      <p>
-        I am a PhD student in Computer Engineering at the Budapest University of Technology
-        and Economics (BME), working on <em>modern computer vision systems for autonomous
-        vehicles</em>. My work sits where deep learning meets geometry: visual SLAM and
-        odometry, semantic segmentation and representation pretraining, and — most recently —
-        traversability mapping of unstructured environments for path planning, which I spent
-        a year on as a researcher at Shizuoka University.
-      </p>
-      <p>
-        Before the PhD I completed my MSc and BSc in Electrical Engineering at BME, with
-        theses on deep learning-based SLAM and on GPU-accelerated optical flow.
-      </p>
+      <h2 data-i18n="about.h">About</h2>
+      <p class="lede" data-i18n="about.p1">I am a PhD student in Computer Engineering at the Budapest University of Technology and Economics (BME), working on <em>modern computer vision systems for autonomous vehicles</em>. My work sits where deep learning meets geometry: visual SLAM and odometry, semantic segmentation and representation pretraining, and — most recently — traversability mapping of unstructured environments for path planning, which I spent a year on as a researcher at Shizuoka University.</p>
+      <p class="lede" data-i18n="about.p2">Before the PhD I completed my MSc and BSc in Electrical Engineering at BME, with theses on deep learning-based SLAM and on GPU-accelerated optical flow.</p>
     </section>
 
     <section id="research">
-      <h2>Research Interests</h2>
-      <ul class="clean">
-        <li>• Visual SLAM and visual odometry</li>
-        <li>• Semantic segmentation and representation pretraining</li>
-        <li>• Traversability mapping and path planning for mobile robots</li>
-        <li>• Deep learning for autonomous driving</li>
-      </ul>
+      <h2 data-i18n="research.h">Research interests</h2>
+      <div class="tags">
+        <span data-i18n="tag.slam">Visual SLAM</span>
+        <span data-i18n="tag.vo">Visual odometry</span>
+        <span data-i18n="tag.seg">Semantic segmentation</span>
+        <span data-i18n="tag.pre">Representation pretraining</span>
+        <span data-i18n="tag.trav">Traversability mapping</span>
+        <span data-i18n="tag.ad">Autonomous driving</span>
+      </div>
     </section>
 
     <section id="publications">
-      <h2>Publications</h2>
+      <h2 data-i18n="pub.h">Publications</h2>
 
-      <h3>Journal Articles</h3>
-      <div class="pub">
-        <div class="pub-title">ATDN vSLAM: An All-Through Deep Learning-Based Solution for Visual Simultaneous Localization and Mapping</div>
-        <div class="pub-meta">
-          Mátyás Szántó, <strong>György Richárd Bogár</strong>, László Vajta —
-          <em>Periodica Polytechnica Electrical Engineering and Computer Science</em>,
-          66(3), 236–247, 2022.
-          <a href="https://doi.org/10.3311/PPee.20437">doi:10.3311/PPee.20437</a>
+      <h3 data-i18n="pub.journal">Journal articles</h3>
+      <div class="entries">
+        <div class="entry">
+          <div>
+            <div class="entry-title">ATDN vSLAM: An All-Through Deep Learning-Based Solution for Visual Simultaneous Localization and Mapping</div>
+            <div class="entry-sub">Mátyás Szántó, <strong>György Richárd Bogár</strong>, László Vajta — <em>Periodica Polytechnica Electrical Engineering and Computer Science</em>, 66(3), 236–247. <a href="https://doi.org/10.3311/PPee.20437">doi:10.3311/PPee.20437</a></div>
+          </div>
+          <div class="entry-meta">2022</div>
         </div>
       </div>
 
-      <h3>Conference Proceedings</h3>
-      <div class="pub">
-        <div class="pub-title">Refining Semantic Image Dataset with a Zero-shot Segmentor</div>
-        <div class="pub-meta">
-          <strong>György Richárd Bogár</strong>, Márton Szemenyei —
-          WAIT: Workshop on the Advances in Information Technology, Budapest, 2025.
+      <h3 data-i18n="pub.conf">Conference proceedings</h3>
+      <div class="entries">
+        <div class="entry">
+          <div>
+            <div class="entry-title">Refining Semantic Image Dataset with a Zero-shot Segmentor</div>
+            <div class="entry-sub"><strong>György Richárd Bogár</strong>, Márton Szemenyei — WAIT: Workshop on the Advances in Information Technology, Budapest</div>
+          </div>
+          <div class="entry-meta">2025</div>
+        </div>
+        <div class="entry">
+          <div>
+            <div class="entry-title">Image Segmentation based on Pretrained Class Distributions</div>
+            <div class="entry-sub"><strong>György Richárd Bogár</strong>, Márton Szemenyei — Eleventh Hungarian Conference on Computer Graphics and Geometry, Budapest</div>
+          </div>
+          <div class="entry-meta">2024</div>
+        </div>
+        <div class="entry">
+          <div>
+            <div class="entry-title">Pretraining Vision Encoders on Semantic Data</div>
+            <div class="entry-sub"><strong>György Richárd Bogár</strong>, Márton Szemenyei — WAIT: Workshop on the Advances in Information Technology, Budapest</div>
+          </div>
+          <div class="entry-meta">2024</div>
+        </div>
+        <div class="entry">
+          <div>
+            <div class="entry-title">Flow-only Visual Odometry: Enhancing Generalization Capabilities of ATDN vSLAM</div>
+            <div class="entry-sub"><strong>György Richárd Bogár</strong>, Mátyás Szántó, Márton Szemenyei — 14th Conference of the Hungarian Association for Image Analysis and Pattern Recognition (KÉPAF)</div>
+          </div>
+          <div class="entry-meta">2023</div>
+        </div>
+        <div class="entry">
+          <div>
+            <div class="entry-title">Performance Comparison of Different Visual Odometry Architectures to Improve ATDN vSLAM</div>
+            <div class="entry-sub"><strong>György Richárd Bogár</strong>, Mátyás Szántó, Márton Szemenyei — 6th European Conference on Electrical Engineering &amp; Computer Science (ELECS), 168–176. <a href="https://doi.org/10.1109/ELECS55825.2022.00035">doi:10.1109/ELECS55825.2022.00035</a></div>
+          </div>
+          <div class="entry-meta">2022</div>
         </div>
       </div>
-      <div class="pub">
-        <div class="pub-title">Image Segmentation based on Pretrained Class Distributions</div>
-        <div class="pub-meta">
-          <strong>György Richárd Bogár</strong>, Márton Szemenyei —
-          Eleventh Hungarian Conference on Computer Graphics and Geometry, Budapest, 2024.
-        </div>
-      </div>
-      <div class="pub">
-        <div class="pub-title">Pretraining Vision Encoders on Semantic Data</div>
-        <div class="pub-meta">
-          <strong>György Richárd Bogár</strong>, Márton Szemenyei —
-          WAIT: Workshop on the Advances in Information Technology, Budapest, 2024.
-        </div>
-      </div>
-      <div class="pub">
-        <div class="pub-title">Flow-only Visual Odometry: Enhancing Generalization Capabilities of ATDN vSLAM</div>
-        <div class="pub-meta">
-          <strong>György Richárd Bogár</strong>, Mátyás Szántó, Márton Szemenyei —
-          14th Conference of the Hungarian Association for Image Analysis and Pattern
-          Recognition (KÉPAF), 2023.
-        </div>
-      </div>
-      <div class="pub">
-        <div class="pub-title">Performance Comparison of Different Visual Odometry Architectures to Improve ATDN vSLAM</div>
-        <div class="pub-meta">
-          <strong>György Richárd Bogár</strong>, Mátyás Szántó, Márton Szemenyei —
-          2022 6th European Conference on Electrical Engineering &amp; Computer Science
-          (ELECS), 168–176.
-          <a href="https://doi.org/10.1109/ELECS55825.2022.00035">doi:10.1109/ELECS55825.2022.00035</a>
+
+      <h3 data-i18n="pub.student">Student research conference</h3>
+      <div class="entries">
+        <div class="entry">
+          <div>
+            <div class="entry-title" data-i18n="pub.tdk.t">Development and application of depth estimation and semantic segmentation deep neural networks</div>
+            <div class="entry-sub" data-i18n="pub.tdk.s">Scientific Students' Associations' Conference (TDK), Image Processing section — <strong>3rd place</strong>.</div>
+          </div>
+          <div class="entry-meta">2021</div>
         </div>
       </div>
     </section>
 
     <section id="experience">
-      <h2>Experience</h2>
-      <div class="pub">
-        <div class="pub-meta">Apr 2025 — Mar 2026</div>
-        <div class="pub-title">Researcher — Shizuoka University</div>
-        <div class="pub-meta">
-          Kobayashi and Hayakawa Laboratory, Suzuki Fellowship Program. Research topic:
-          <em>Deep Learning Supported Traversability Mapping of Unstructured Environments
-          for Path Planning</em>.
+      <h2 data-i18n="exp.h">Experience</h2>
+      <div class="entries">
+        <div class="entry">
+          <div>
+            <div class="entry-title" data-i18n="exp.1.t">Researcher — Shizuoka University</div>
+            <div class="entry-sub" data-i18n="exp.1.s">Kobayashi and Hayakawa Laboratory, Suzuki Fellowship Program. Research topic: <em>Deep learning supported traversability mapping of unstructured environments for path planning</em>.</div>
+          </div>
+          <div class="entry-meta">2025 — 2026</div>
         </div>
-      </div>
-      <div class="pub">
-        <div class="pub-meta">2022 — 2024</div>
-        <div class="pub-title">Research Assistant — Budapest University of Technology and Economics</div>
-        <div class="pub-meta">Department of Control Engineering and Information Technology.</div>
-      </div>
-      <div class="pub">
-        <div class="pub-meta">Jul 2023 — Aug 2023</div>
-        <div class="pub-title">Electrical Engineer — COEL Kft.</div>
-      </div>
-      <div class="pub">
-        <div class="pub-meta">May 2019 — Aug 2019</div>
-        <div class="pub-title">Software Tester Intern — evosoft Hungary Kft.</div>
+        <div class="entry">
+          <div>
+            <div class="entry-title" data-i18n="exp.2.t">Research Assistant — Budapest University of Technology and Economics</div>
+            <div class="entry-sub" data-i18n="exp.2.s">Department of Control Engineering and Information Technology.</div>
+          </div>
+          <div class="entry-meta">2022 — 2024</div>
+        </div>
+        <div class="entry">
+          <div>
+            <div class="entry-title" data-i18n="exp.3.t">Electrical Engineer — COEL Kft.</div>
+          </div>
+          <div class="entry-meta">2023</div>
+        </div>
+        <div class="entry">
+          <div>
+            <div class="entry-title" data-i18n="exp.4.t">Software Tester Intern — evosoft Hungary Kft.</div>
+          </div>
+          <div class="entry-meta">2019</div>
+        </div>
       </div>
     </section>
 
     <section id="education">
-      <h2>Education</h2>
-      <div class="pub">
-        <div class="pub-meta">2023 —</div>
-        <div class="pub-title">PhD, Computer Engineering — Budapest University of Technology and Economics</div>
-        <div class="pub-meta">Research topic: <em>Modern Computer Vision Systems for Autonomous Vehicles</em>.</div>
-      </div>
-      <div class="pub">
-        <div class="pub-meta">2020 — 2022</div>
-        <div class="pub-title">MSc, Electrical Engineering — Budapest University of Technology and Economics</div>
-        <div class="pub-meta">Thesis: <em>Development of deep learning-based SLAM algorithm</em>.</div>
-      </div>
-      <div class="pub">
-        <div class="pub-meta">2016 — 2020</div>
-        <div class="pub-title">BSc, Electrical Engineering — Budapest University of Technology and Economics</div>
-        <div class="pub-meta">Thesis: <em>Generation of optical flow images using a parallel-architecture processing unit</em>.</div>
-      </div>
-      <div class="pub">
-        <div class="pub-meta">2021</div>
-        <div class="pub-title">3rd place — Scientific Students' Associations' Conference (TDK), Image Processing section</div>
-        <div class="pub-meta">
-          <em>Development and application of depth estimation and semantic segmentation
-          deep neural networks</em>.
+      <h2 data-i18n="edu.h">Education</h2>
+      <div class="entries">
+        <div class="entry">
+          <div>
+            <div class="entry-title" data-i18n="edu.1.t">PhD, Computer Engineering — Budapest University of Technology and Economics</div>
+            <div class="entry-sub" data-i18n="edu.1.s">Research topic: <em>Modern computer vision systems for autonomous vehicles</em>.</div>
+          </div>
+          <div class="entry-meta">2023 —</div>
+        </div>
+        <div class="entry">
+          <div>
+            <div class="entry-title" data-i18n="edu.2.t">MSc, Electrical Engineering — Budapest University of Technology and Economics</div>
+            <div class="entry-sub" data-i18n="edu.2.s">Thesis: <em>Development of a deep learning-based SLAM algorithm</em>.</div>
+          </div>
+          <div class="entry-meta">2020 — 2022</div>
+        </div>
+        <div class="entry">
+          <div>
+            <div class="entry-title" data-i18n="edu.3.t">BSc, Electrical Engineering — Budapest University of Technology and Economics</div>
+            <div class="entry-sub" data-i18n="edu.3.s">Thesis: <em>Generation of optical flow images using a parallel-architecture processing unit</em>.</div>
+          </div>
+          <div class="entry-meta">2016 — 2020</div>
         </div>
       </div>
     </section>
 
     <section id="teaching">
-      <h2>Teaching &amp; Supervision</h2>
-      <ul class="clean">
-        <li>• Image Processing practical classes for BSc students</li>
-        <li>• Computer Vision laboratory classes for MSc students</li>
-        <li>• Supervision of BSc and MSc theses on digital twins of a mecanum-wheeled mobile robot, using Nvidia Isaac Sim and Isaac Lab</li>
-        <li>• Sole author of <a href="https://github.com/VisionLab-IIT/research-project-example">research-project-example</a>, a tutorial repository on research project structure</li>
-      </ul>
+      <h2 data-i18n="teach.h">Teaching &amp; supervision</h2>
+      <div class="entries">
+        <div class="entry">
+          <div><div class="entry-title" data-i18n="teach.1">Image Processing practical classes for BSc students</div></div>
+        </div>
+        <div class="entry">
+          <div><div class="entry-title" data-i18n="teach.2">Computer Vision laboratory classes for MSc students</div></div>
+        </div>
+        <div class="entry">
+          <div><div class="entry-title" data-i18n="teach.3">Supervision of BSc and MSc theses on digital twins of a mecanum-wheeled mobile robot, using Nvidia Isaac Sim and Isaac Lab</div></div>
+        </div>
+        <div class="entry">
+          <div><div class="entry-title" data-i18n="teach.4">Sole author of <a href="https://github.com/VisionLab-IIT/research-project-example">research-project-example</a>, a tutorial repository on research project structure</div></div>
+        </div>
+      </div>
     </section>
 
     <section id="skills">
-      <h2>Technical Skills</h2>
-      <ul class="clean">
-        <li><strong>Programming</strong> — Python, C++, C, MATLAB, C#, Java, Kotlin</li>
-        <li><strong>Machine learning</strong> — PyTorch, NumPy; CNN and Transformer architectures; Hydra, OmegaConf</li>
-        <li><strong>Robotics</strong> — ROS 1 and ROS 2, IMU and RGB-D sensors, rerun-sdk, Nvidia Isaac Sim and Isaac Lab</li>
-        <li><strong>Other</strong> — Linux, Git, Docker, uv, ruff</li>
-        <li><strong>Spoken languages</strong> — English (B2), German (B2), Japanese (basic)</li>
-      </ul>
+      <h2 data-i18n="skills.h">Technical skills</h2>
+      <div class="rows">
+        <div class="row">
+          <span class="row-label" data-i18n="skills.1.l">Programming</span>
+          <span class="row-val">Python, C++, C, MATLAB, C#, Java, Kotlin</span>
+        </div>
+        <div class="row">
+          <span class="row-label" data-i18n="skills.2.l">Machine learning</span>
+          <span class="row-val">PyTorch, NumPy, CNN and Transformer architectures, Hydra, OmegaConf</span>
+        </div>
+        <div class="row">
+          <span class="row-label" data-i18n="skills.3.l">Robotics</span>
+          <span class="row-val">ROS 1 and ROS 2, IMU and RGB-D sensors, rerun-sdk, Nvidia Isaac Sim and Isaac Lab</span>
+        </div>
+        <div class="row">
+          <span class="row-label" data-i18n="skills.4.l">Other</span>
+          <span class="row-val">Linux, Git, Docker, uv, ruff</span>
+        </div>
+        <div class="row">
+          <span class="row-label" data-i18n="skills.5.l">Languages</span>
+          <span class="row-val" data-i18n="skills.5.v">English (B2), German (B2), Japanese (basic)</span>
+        </div>
+      </div>
     </section>
 
     <section id="notes">
-      <h2>Interactive Notes</h2>
-      <p>
-        Visual explainers I build while working through ideas — rendered live in the
-        browser with WebGL. Best viewed on a desktop with a mouse and keyboard.
-      </p>
-      <div class="links">
-        <a href="/manifold-atlas/?lang=en">Manifold Atlas: from flat gradients to Lie groups and SLAM</a>
-      </div>
-      <p class="pub-meta" style="margin-top: 10px;">Available in English, Hungarian and Japanese (switch with the flag menu).</p>
+      <h2 data-i18n="notes.h">Interactive notes</h2>
+      <p class="lede" data-i18n="notes.p">Visual explainers I build while working through ideas — rendered live in the browser with WebGL. Best viewed on a desktop with a mouse and keyboard.</p>
+      <a class="entry" href="/manifold-atlas/?lang=en" data-href-lang="/manifold-atlas/?lang={lang}">
+        <span class="entry-title" data-i18n="notes.atlas">Manifold Atlas: from flat gradients to Lie groups and SLAM</span>
+        <span class="entry-meta">EN · HU · JA</span>
+      </a>
     </section>
 
     <section id="contact">
-      <h2>Contact &amp; Links</h2>
-      <p>Feel free to reach out by email or find me on the platforms below.</p>
-      <div class="links">
-        <a href="mailto:gyrbogar@iit.bme.hu">Email</a>
-        <a href="https://github.com/bogarrichard">GitHub</a>
-        <a href="https://www.linkedin.com/in/gy%C3%B6rgy-rich%C3%A1rd-bog%C3%A1r">LinkedIn</a>
-        <!-- <a href="#">CV (PDF)</a> -->
+      <h2 data-i18n="contact.h">Contact</h2>
+      <div class="contact">
+        <a href="mailto:gyrbogar@iit.bme.hu">gyrbogar@iit.bme.hu</a>
+        <a class="subtle" href="https://github.com/bogarrichard">GitHub</a>
+        <a class="subtle" href="https://www.linkedin.com/in/gy%C3%B6rgy-rich%C3%A1rd-bog%C3%A1r">LinkedIn</a>
       </div>
     </section>
+
   </main>
 
-  <footer>
-    <div class="container">
-      © <span id="year"></span> György Richárd Bogár
-    </div>
-  </footer>
+  <footer>© <span id="year">2026</span> György Richárd Bogár</footer>
 
   <script>
+  (function () {
+    "use strict";
+
+    /* Hungarian and Japanese copy. English lives in the markup, so the page
+       still reads correctly with JavaScript switched off. */
+    var DICT = {
+      hu: {
+        "role": "Doktorandusz · Budapesti Műszaki és Gazdaságtudományi Egyetem",
+
+        "about.h": "Bemutatkozás",
+        "about.p1": "Doktorandusz vagyok a Budapesti Műszaki és Gazdaságtudományi Egyetem (BME) mérnökinformatikus doktori programján, ahol <em>autonóm járművek modern számítógépes látórendszereivel</em> foglalkozom. A munkám ott van, ahol a mélytanulás és a geometria találkozik: vizuális SLAM és odometria, szemantikus szegmentálás, reprezentáció-előtanítás. Legutóbb strukturálatlan környezetek járhatósági térképezésén dolgoztam útvonaltervezéshez, ezzel egy évig a japán Shizuoka Egyetem kutatójaként.",
+        "about.p2": "A doktori képzés előtt villamosmérnöki MSc és BSc diplomát szereztem a BME-n. A dolgozataim mélytanuláson alapuló SLAM-ról és GPU-gyorsított optikai áramlásról szóltak.",
+
+        "research.h": "Kutatási területek",
+        "tag.slam": "Vizuális SLAM",
+        "tag.vo": "Vizuális odometria",
+        "tag.seg": "Szemantikus szegmentálás",
+        "tag.pre": "Reprezentáció-előtanítás",
+        "tag.trav": "Járhatósági térképezés",
+        "tag.ad": "Autonóm vezetés",
+
+        "pub.h": "Publikációk",
+        "pub.journal": "Folyóiratcikkek",
+        "pub.conf": "Konferenciakiadványok",
+        "pub.student": "Tudományos diákköri dolgozat",
+        "pub.tdk.t": "Mélységbecslő és szemantikus szegmentáló mély neurális hálók fejlesztése és alkalmazása",
+        "pub.tdk.s": "Tudományos Diákköri Konferencia (TDK), Képfeldolgozás szekció — <strong>3. helyezés</strong>.",
+
+        "exp.h": "Szakmai tapasztalat",
+        "exp.1.t": "Kutató — Shizuoka Egyetem",
+        "exp.1.s": "Kobayashi–Hayakawa Laboratórium, Suzuki Fellowship Program. Kutatási téma: <em>strukturálatlan környezetek mélytanulással támogatott járhatósági térképezése útvonaltervezéshez</em>.",
+        "exp.2.t": "Tudományos segédmunkatárs — Budapesti Műszaki és Gazdaságtudományi Egyetem",
+        "exp.2.s": "Irányítástechnika és Informatika Tanszék.",
+        "exp.3.t": "Villamosmérnök — COEL Kft.",
+        "exp.4.t": "Szoftvertesztelő gyakornok — evosoft Hungary Kft.",
+
+        "edu.h": "Tanulmányok",
+        "edu.1.t": "PhD, mérnökinformatika — Budapesti Műszaki és Gazdaságtudományi Egyetem",
+        "edu.1.s": "Kutatási téma: <em>autonóm járművek modern számítógépes látórendszerei</em>.",
+        "edu.2.t": "MSc, villamosmérnök — Budapesti Műszaki és Gazdaságtudományi Egyetem",
+        "edu.2.s": "Diplomaterv: <em>mélytanuláson alapuló SLAM-algoritmus fejlesztése</em>.",
+        "edu.3.t": "BSc, villamosmérnök — Budapesti Műszaki és Gazdaságtudományi Egyetem",
+        "edu.3.s": "Szakdolgozat: <em>optikai áramlási képek előállítása párhuzamos architektúrájú feldolgozóegységgel</em>.",
+
+        "teach.h": "Oktatás és témavezetés",
+        "teach.1": "Képfeldolgozás gyakorlatok BSc hallgatóknak",
+        "teach.2": "Számítógépes látás laborok MSc hallgatóknak",
+        "teach.3": "BSc és MSc szakdolgozatok témavezetése mecanum-kerekű mobilrobot digitális ikerpárjáról, Nvidia Isaac Sim és Isaac Lab használatával",
+        "teach.4": "A <a href=\"https://github.com/VisionLab-IIT/research-project-example\">research-project-example</a> egyedüli szerzője — oktatóanyag a kutatási projektek felépítéséről",
+
+        "skills.h": "Szakmai készségek",
+        "skills.1.l": "Programozás",
+        "skills.2.l": "Gépi tanulás",
+        "skills.3.l": "Robotika",
+        "skills.4.l": "Egyéb",
+        "skills.5.l": "Nyelvek",
+        "skills.5.v": "Angol (B2), német (B2), japán (alapfok)",
+
+        "notes.h": "Interaktív jegyzetek",
+        "notes.p": "Vizuális magyarázók, amelyeket gondolkodás közben készítek — WebGL-lel, élőben a böngészőben. Asztali gépen, egérrel és billentyűzettel a legjobb.",
+        "notes.atlas": "Manifold Atlas: a lapos gradiensektől a Lie-csoportokig és a SLAM-ig",
+
+        "contact.h": "Kapcsolat"
+      },
+
+      ja: {
+        "role": "博士課程学生 · ブダペスト工科経済大学",
+
+        "about.h": "自己紹介",
+        "about.p1": "ブダペスト工科経済大学（BME）の情報工学博士課程に在籍し、<em>自動運転車のための最新のコンピュータビジョンシステム</em>を研究しています。扱っているのは深層学習と幾何学が交わる領域——ビジュアルSLAMとオドメトリ、セマンティックセグメンテーションと表現事前学習、そして最近では経路計画のための非整備環境の走行可能性マッピングで、最後のテーマには静岡大学の研究員として一年間取り組みました。",
+        "about.p2": "博士課程の前は、BMEで電気工学の修士号と学士号を取得し、深層学習ベースのSLAMとGPUによる高速化オプティカルフローについて論文を執筆しました。",
+
+        "research.h": "研究テーマ",
+        "tag.slam": "ビジュアルSLAM",
+        "tag.vo": "ビジュアルオドメトリ",
+        "tag.seg": "セマンティックセグメンテーション",
+        "tag.pre": "表現事前学習",
+        "tag.trav": "走行可能性マッピング",
+        "tag.ad": "自動運転",
+
+        "pub.h": "論文",
+        "pub.journal": "学術雑誌論文",
+        "pub.conf": "国際会議論文",
+        "pub.student": "学生研究発表会",
+        "pub.tdk.t": "深度推定およびセマンティックセグメンテーション深層ニューラルネットワークの開発と応用",
+        "pub.tdk.s": "学生科学研究会議（TDK）画像処理部門 — <strong>第3位</strong>",
+
+        "exp.h": "職歴",
+        "exp.1.t": "研究員 — 静岡大学",
+        "exp.1.s": "小林・早川研究室、鈴木フェローシップ・プログラム。研究テーマ：<em>経路計画のための深層学習を用いた非整備環境の走行可能性マッピング</em>。",
+        "exp.2.t": "研究助手 — ブダペスト工科経済大学",
+        "exp.2.s": "制御工学・情報技術学科",
+        "exp.3.t": "電気技術者 — COEL Kft.",
+        "exp.4.t": "ソフトウェアテスター（インターン） — evosoft Hungary Kft.",
+
+        "edu.h": "学歴",
+        "edu.1.t": "博士課程（情報工学） — ブダペスト工科経済大学",
+        "edu.1.s": "研究テーマ：<em>自動運転車のための最新のコンピュータビジョンシステム</em>",
+        "edu.2.t": "修士（電気工学） — ブダペスト工科経済大学",
+        "edu.2.s": "修士論文：<em>深層学習ベースのSLAMアルゴリズムの開発</em>",
+        "edu.3.t": "学士（電気工学） — ブダペスト工科経済大学",
+        "edu.3.s": "卒業論文：<em>並列アーキテクチャ処理装置を用いたオプティカルフロー画像の生成</em>",
+
+        "teach.h": "教育・指導",
+        "teach.1": "画像処理演習（学部生向け）",
+        "teach.2": "コンピュータビジョン実験（修士課程向け）",
+        "teach.3": "Nvidia Isaac SimおよびIsaac Labを用いた、メカナムホイール移動ロボットのデジタルツインに関する学士・修士論文の指導",
+        "teach.4": "研究プロジェクトの構成に関するチュートリアルリポジトリ <a href=\"https://github.com/VisionLab-IIT/research-project-example\">research-project-example</a> の単独著者",
+
+        "skills.h": "技術スキル",
+        "skills.1.l": "プログラミング",
+        "skills.2.l": "機械学習",
+        "skills.3.l": "ロボティクス",
+        "skills.4.l": "その他",
+        "skills.5.l": "語学",
+        "skills.5.v": "英語（B2）、ドイツ語（B2）、日本語（初級）",
+
+        "notes.h": "インタラクティブ・ノート",
+        "notes.p": "考えを整理しながら作っている視覚的な解説です。WebGLでブラウザ上に描画されます。マウスとキーボードのあるデスクトップ環境での閲覧を推奨します。",
+        "notes.atlas": "Manifold Atlas — 平坦な勾配からリー群とSLAMへ",
+
+        "contact.h": "連絡先"
+      }
+    };
+
+    var root = document.documentElement;
+    var nodes = document.querySelectorAll("[data-i18n]");
+    var english = new Map();
+    nodes.forEach(function (n) { english.set(n, n.innerHTML); });
+
+    function setLang(lang) {
+      root.lang = lang;
+      var pack = DICT[lang];
+      nodes.forEach(function (n) {
+        var v = pack && pack[n.dataset.i18n];
+        n.innerHTML = v || english.get(n);
+      });
+      document.querySelectorAll("[data-href-lang]").forEach(function (a) {
+        a.href = a.dataset.hrefLang.replace("{lang}", lang);
+      });
+      document.querySelectorAll("[data-set-lang]").forEach(function (b) {
+        b.setAttribute("aria-pressed", String(b.dataset.setLang === lang));
+      });
+      try { localStorage.setItem("lang", lang); } catch (e) {}
+    }
+
+    function setTheme(theme) {
+      root.dataset.theme = theme;
+      var meta = document.querySelector('meta[name="theme-color"]');
+      if (meta) meta.content = theme === "dark" ? "#211b16" : "#f8f6f1";
+      try { localStorage.setItem("theme", theme); } catch (e) {}
+    }
+
+    document.querySelectorAll("[data-set-lang]").forEach(function (b) {
+      b.addEventListener("click", function () { setLang(b.dataset.setLang); });
+    });
+
+    document.querySelector(".theme").addEventListener("click", function () {
+      setTheme(root.dataset.theme === "dark" ? "light" : "dark");
+    });
+
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    /* Apply the language the head script resolved. */
+    setLang(root.lang);
+    setTheme(root.dataset.theme);
+  })();
   </script>
 </body>
 </html>

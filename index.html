@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>György Richárd Bogár</title>
-  <meta name="description" content="György Richárd Bogár — PhD Student at Budapest University of Technology and Economics.">
+  <meta name="description" content="György Richárd Bogár — PhD student at Budapest University of Technology and Economics, working on computer vision, deep learning and robotics for autonomous vehicles.">
   <style>
     :root {
       --bg: #ffffff;
@@ -66,6 +66,11 @@
     section { padding: 40px 0; border-bottom: 1px solid var(--border); }
     section:last-of-type { border-bottom: none; }
     h2 { font-size: 1.3rem; margin: 0 0 16px; letter-spacing: -0.01em; }
+    h3 {
+      font-size: 0.95rem; font-weight: 600; color: var(--muted);
+      letter-spacing: 0.02em; margin: 26px 0 2px;
+    }
+    h3:first-of-type { margin-top: 0; }
     p { margin: 0 0 16px; }
 
     ul.clean { list-style: none; padding: 0; margin: 0; }
@@ -114,6 +119,11 @@
     <div class="container">
       <a href="#about">About</a>
       <a href="#research">Research</a>
+      <a href="#publications">Publications</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+      <a href="#teaching">Teaching</a>
+      <a href="#skills">Skills</a>
       <a href="#notes">Notes</a>
       <a href="#contact">Contact</a>
     </div>
@@ -123,20 +133,155 @@
     <section id="about">
       <h2>About</h2>
       <p>
-        I am a PhD student at the Budapest University of Technology and Economics (BME).
-        <!-- TODO: Write a short bio. What field are you in? What broad questions
-             motivate your work? When and where did you start your PhD? -->
-        My research focuses on <em>Computer Vision, Deep Learning and Robotics</em>. Previously, I completed
-        my <em>MSc and BSc </em> in <em>Electrical Engineering</em> at <em>BME</em>.
+        I am a PhD student in Computer Engineering at the Budapest University of Technology
+        and Economics (BME), working on <em>modern computer vision systems for autonomous
+        vehicles</em>. My work sits where deep learning meets geometry: visual SLAM and
+        odometry, semantic segmentation and representation pretraining, and — most recently —
+        traversability mapping of unstructured environments for path planning, which I spent
+        a year on as a researcher at Shizuoka University.
+      </p>
+      <p>
+        Before the PhD I completed my MSc and BSc in Electrical Engineering at BME, with
+        theses on deep learning-based SLAM and on GPU-accelerated optical flow.
       </p>
     </section>
 
     <section id="research">
       <h2>Research Interests</h2>
       <ul class="clean">
-        <li>• Computer Vision</li>
-        <li>• Deep Learning</li>
-        <li>• Robotics</li>
+        <li>• Visual SLAM and visual odometry</li>
+        <li>• Semantic segmentation and representation pretraining</li>
+        <li>• Traversability mapping and path planning for mobile robots</li>
+        <li>• Deep learning for autonomous driving</li>
+      </ul>
+    </section>
+
+    <section id="publications">
+      <h2>Publications</h2>
+
+      <h3>Journal Articles</h3>
+      <div class="pub">
+        <div class="pub-title">ATDN vSLAM: An All-Through Deep Learning-Based Solution for Visual Simultaneous Localization and Mapping</div>
+        <div class="pub-meta">
+          Mátyás Szántó, <strong>György Richárd Bogár</strong>, László Vajta —
+          <em>Periodica Polytechnica Electrical Engineering and Computer Science</em>,
+          66(3), 236–247, 2022.
+          <a href="https://doi.org/10.3311/PPee.20437">doi:10.3311/PPee.20437</a>
+        </div>
+      </div>
+
+      <h3>Conference Proceedings</h3>
+      <div class="pub">
+        <div class="pub-title">Refining Semantic Image Dataset with a Zero-shot Segmentor</div>
+        <div class="pub-meta">
+          <strong>György Richárd Bogár</strong>, Márton Szemenyei —
+          WAIT: Workshop on the Advances in Information Technology, Budapest, 2025.
+        </div>
+      </div>
+      <div class="pub">
+        <div class="pub-title">Image Segmentation based on Pretrained Class Distributions</div>
+        <div class="pub-meta">
+          <strong>György Richárd Bogár</strong>, Márton Szemenyei —
+          Eleventh Hungarian Conference on Computer Graphics and Geometry, Budapest, 2024.
+        </div>
+      </div>
+      <div class="pub">
+        <div class="pub-title">Pretraining Vision Encoders on Semantic Data</div>
+        <div class="pub-meta">
+          <strong>György Richárd Bogár</strong>, Márton Szemenyei —
+          WAIT: Workshop on the Advances in Information Technology, Budapest, 2024.
+        </div>
+      </div>
+      <div class="pub">
+        <div class="pub-title">Flow-only Visual Odometry: Enhancing Generalization Capabilities of ATDN vSLAM</div>
+        <div class="pub-meta">
+          <strong>György Richárd Bogár</strong>, Mátyás Szántó, Márton Szemenyei —
+          14th Conference of the Hungarian Association for Image Analysis and Pattern
+          Recognition (KÉPAF), 2023.
+        </div>
+      </div>
+      <div class="pub">
+        <div class="pub-title">Performance Comparison of Different Visual Odometry Architectures to Improve ATDN vSLAM</div>
+        <div class="pub-meta">
+          <strong>György Richárd Bogár</strong>, Mátyás Szántó, Márton Szemenyei —
+          2022 6th European Conference on Electrical Engineering &amp; Computer Science
+          (ELECS), 168–176.
+          <a href="https://doi.org/10.1109/ELECS55825.2022.00035">doi:10.1109/ELECS55825.2022.00035</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <h2>Experience</h2>
+      <div class="pub">
+        <div class="pub-meta">Apr 2025 — Mar 2026</div>
+        <div class="pub-title">Researcher — Shizuoka University</div>
+        <div class="pub-meta">
+          Kobayashi and Hayakawa Laboratory, Suzuki Fellowship Program. Research topic:
+          <em>Deep Learning Supported Traversability Mapping of Unstructured Environments
+          for Path Planning</em>.
+        </div>
+      </div>
+      <div class="pub">
+        <div class="pub-meta">2022 — 2024</div>
+        <div class="pub-title">Research Assistant — Budapest University of Technology and Economics</div>
+        <div class="pub-meta">Department of Control Engineering and Information Technology.</div>
+      </div>
+      <div class="pub">
+        <div class="pub-meta">Jul 2023 — Aug 2023</div>
+        <div class="pub-title">Electrical Engineer — COEL Kft.</div>
+      </div>
+      <div class="pub">
+        <div class="pub-meta">May 2019 — Aug 2019</div>
+        <div class="pub-title">Software Tester Intern — evosoft Hungary Kft.</div>
+      </div>
+    </section>
+
+    <section id="education">
+      <h2>Education</h2>
+      <div class="pub">
+        <div class="pub-meta">2023 —</div>
+        <div class="pub-title">PhD, Computer Engineering — Budapest University of Technology and Economics</div>
+        <div class="pub-meta">Research topic: <em>Modern Computer Vision Systems for Autonomous Vehicles</em>.</div>
+      </div>
+      <div class="pub">
+        <div class="pub-meta">2020 — 2022</div>
+        <div class="pub-title">MSc, Electrical Engineering — Budapest University of Technology and Economics</div>
+        <div class="pub-meta">Thesis: <em>Development of deep learning-based SLAM algorithm</em>.</div>
+      </div>
+      <div class="pub">
+        <div class="pub-meta">2016 — 2020</div>
+        <div class="pub-title">BSc, Electrical Engineering — Budapest University of Technology and Economics</div>
+        <div class="pub-meta">Thesis: <em>Generation of optical flow images using a parallel-architecture processing unit</em>.</div>
+      </div>
+      <div class="pub">
+        <div class="pub-meta">2021</div>
+        <div class="pub-title">3rd place — Scientific Students' Associations' Conference (TDK), Image Processing section</div>
+        <div class="pub-meta">
+          <em>Development and application of depth estimation and semantic segmentation
+          deep neural networks</em>.
+        </div>
+      </div>
+    </section>
+
+    <section id="teaching">
+      <h2>Teaching &amp; Supervision</h2>
+      <ul class="clean">
+        <li>• Image Processing practical classes for BSc students</li>
+        <li>• Computer Vision laboratory classes for MSc students</li>
+        <li>• Supervision of BSc and MSc theses on digital twins of a mecanum-wheeled mobile robot, using Nvidia Isaac Sim and Isaac Lab</li>
+        <li>• Sole author of <a href="https://github.com/VisionLab-IIT/research-project-example">research-project-example</a>, a tutorial repository on research project structure</li>
+      </ul>
+    </section>
+
+    <section id="skills">
+      <h2>Technical Skills</h2>
+      <ul class="clean">
+        <li><strong>Programming</strong> — Python, C++, C, MATLAB, C#, Java, Kotlin</li>
+        <li><strong>Machine learning</strong> — PyTorch, NumPy; CNN and Transformer architectures; Hydra, OmegaConf</li>
+        <li><strong>Robotics</strong> — ROS 1 and ROS 2, IMU and RGB-D sensors, rerun-sdk, Nvidia Isaac Sim and Isaac Lab</li>
+        <li><strong>Other</strong> — Linux, Git, Docker, uv, ruff</li>
+        <li><strong>Spoken languages</strong> — English (B2), German (B2), Japanese (basic)</li>
       </ul>
     </section>
 

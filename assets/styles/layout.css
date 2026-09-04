@@ -22,7 +22,7 @@
   padding-top: 68px;
   display: flex;
   flex-direction: column;
-  gap: 76px;
+  gap: 28px;
   animation: riseIn 0.7s ease both;
 }
 
@@ -37,10 +37,16 @@
   }
 }
 
+/* Each section sits in its own flat, static panel — unlike the link cards in
+   Projects and Interactive notes, it never moves or casts a shadow, so the
+   two stay easy to tell apart. */
 section {
   display: flex;
   flex-direction: column;
   gap: 18px;
+  padding: 30px 30px 34px;
+  border-radius: 22px;
+  background: var(--color-surface);
 }
 
 footer {
@@ -57,8 +63,13 @@ footer {
 
 @media (max-width: 560px) {
   .col {
-    gap: 60px;
+    gap: 20px;
     padding-top: 52px;
+  }
+
+  section {
+    padding: 24px 20px 26px;
+    border-radius: 18px;
   }
 
   footer {

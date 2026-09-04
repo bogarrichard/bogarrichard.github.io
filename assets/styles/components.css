@@ -115,7 +115,7 @@
   padding: 9px 17px;
   border-radius: var(--radius-pill);
   white-space: nowrap;
-  background: var(--color-surface);
+  background: var(--color-bg);
   color: var(--color-accent);
   font-size: 15px;
   font-weight: 500;
@@ -201,7 +201,7 @@ a.entry .entry-meta {
   border-top: none;
   padding: 18px 20px;
   border-radius: 16px;
-  background: var(--color-surface);
+  background: var(--color-bg);
   box-shadow: var(--shadow-raised);
   transition:
     transform var(--transition-control),

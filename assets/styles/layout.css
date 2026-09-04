@@ -62,6 +62,14 @@ footer {
    -------------------------------------------------------------------------- */
 
 @media (max-width: 560px) {
+  /* The proportional measure only makes sense once there is width to spare;
+     below the breakpoint the column just fills the padded viewport. */
+  .controls,
+  .col,
+  footer {
+    max-width: 100%;
+  }
+
   .col {
     gap: 20px;
     padding-top: 52px;

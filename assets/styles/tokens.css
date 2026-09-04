@@ -21,7 +21,9 @@
   --font-mono: "JetBrains Mono", monospace;
 
   /* --- Measure ----------------------------------------------------------- */
-  --content-width: 900px;
+  /* 60% of the viewport, capped so very wide monitors don't stretch the
+     line length past a comfortable measure. */
+  --content-width: min(60%, 1040px);
   --radius-pill: 999px;
 
   /* --- Motion ------------------------------------------------------------ */

@@ -194,15 +194,18 @@ a.entry .entry-meta {
 
 /* --- Link cards ----------------------------------------------------------
    Projects and interactive notes: entries that lead off-page get a raised
-   card instead of the plain divider row, with a 2.5D icon that sinks in on
-   press so it reads as a button, not just underlined text. */
+   bubble instead of the plain divider row, and sink in on press so the
+   whole card reads as a button, not just underlined text. */
 .entry-link {
   align-items: center;
   border-top: none;
   padding: 18px 20px;
   border-radius: 16px;
   background: var(--color-surface);
-  transition: transform var(--transition-control);
+  box-shadow: var(--shadow-raised);
+  transition:
+    transform var(--transition-control),
+    box-shadow var(--transition-control);
 }
 
 .entry-link:hover {
@@ -210,41 +213,8 @@ a.entry .entry-meta {
 }
 
 .entry-link:active {
-  transform: translateY(0);
-}
-
-.entry-side {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-shrink: 0;
-}
-
-.entry-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  flex-shrink: 0;
-  border-radius: 10px;
-  background: var(--color-bg);
-  color: var(--color-accent);
-  font-size: 15px;
-  box-shadow: var(--shadow-raised);
-  transition:
-    box-shadow var(--transition-control),
-    color var(--transition-control),
-    transform var(--transition-control);
-}
-
-.entry-link:hover .entry-icon {
-  color: var(--color-accent-alt);
-}
-
-.entry-link:active .entry-icon {
+  transform: translateY(1px);
   box-shadow: var(--shadow-pressed);
-  transform: scale(0.94);
 }
 
 /* Japanese sets denser glyphs, so give the lines more room. */

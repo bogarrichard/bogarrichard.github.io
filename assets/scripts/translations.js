@@ -66,6 +66,11 @@ const TRANSLATIONS = {
     "skills.5.l": "Nyelvek",
     "skills.5.v": "Angol (B2), német (B2), japán (alapfok)",
 
+    "projects.h": "Projektek",
+    "projects.p": "Apróbb eszközök és forkok, amelyeket a kutatómunkán kívül gondozok.",
+    "projects.mathcode": "MathCode — a kódban lévő operátorokat és indexelt változóneveket csinos matematikai szimbólumokként jeleníti meg, a fájl tartalmának módosítása nélkül",
+    "projects.da3": "Depth Anything 3 (fork) — egyszerűsítés, apróbb hibajavítások és dokumentáció",
+
     "notes.h": "Interaktív jegyzetek",
     "notes.p": "Vizuális magyarázók, amelyeket gondolkodás közben készítek — WebGL-lel, élőben a böngészőben. Asztali gépen, egérrel és billentyűzettel a legjobb.",
     "notes.atlas": "Manifold Atlas: a lapos gradiensektől a Lie-csoportokig és a SLAM-ig",
@@ -127,6 +132,11 @@ const TRANSLATIONS = {
     "skills.4.l": "その他",
     "skills.5.l": "語学",
     "skills.5.v": "英語（B2）、ドイツ語（B2）、日本語（初級）",
+
+    "projects.h": "プロジェクト",
+    "projects.p": "研究活動とは別に維持している、小さなツールとフォークです。",
+    "projects.mathcode": "MathCode — コード中の演算子と添字付き変数名を、ファイルの内容を変更することなく、美しい数式記号として表示します",
+    "projects.da3": "Depth Anything 3（フォーク）— 簡略化、細かなバグ修正、ドキュメント整備",
 
     "notes.h": "インタラクティブ・ノート",
     "notes.p": "考えを整理しながら作っている視覚的な解説です。WebGLでブラウザ上に描画されます。マウスとキーボードのあるデスクトップ環境での閲覧を推奨します。",

@@ -206,6 +206,11 @@ a.entry .entry-meta {
   transition:
     transform var(--transition-control),
     box-shadow var(--transition-control);
+  /* These read as buttons, not text, so skip iOS's long-press callout
+     (copy/open menu) and the text-selection handles it would offer. */
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .entry-link:hover {

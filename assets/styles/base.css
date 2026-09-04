@@ -21,6 +21,13 @@ body {
     color var(--transition-theme);
 }
 
+a,
+button {
+  /* Replace the browser's default tap flash with our own :hover/:active
+     states, so touch and pointer input feel the same. */
+  -webkit-tap-highlight-color: transparent;
+}
+
 a {
   color: var(--color-accent);
   text-decoration: none;

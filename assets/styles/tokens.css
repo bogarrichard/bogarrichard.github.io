@@ -28,6 +28,16 @@
   --transition-theme: 0.45s ease;
   --transition-control: 0.25s ease;
   --transition-link: 0.2s ease;
+
+  /* --- Elevation -----------------------------------------------------------
+     Built from the accent and text tokens rather than raw black/white, so the
+     raised-to-pressed feel carries over to the dark palette with no override. */
+  --shadow-raised:
+    -2px -2px 5px color-mix(in srgb, var(--color-accent) 20%, transparent),
+    3px 3px 7px color-mix(in srgb, var(--color-text) 22%, transparent);
+  --shadow-pressed:
+    inset 2px 2px 4px color-mix(in srgb, var(--color-text) 24%, transparent),
+    inset -1px -1px 3px color-mix(in srgb, var(--color-accent) 16%, transparent);
 }
 
 /* --- Colour: dark theme --------------------------------------------------

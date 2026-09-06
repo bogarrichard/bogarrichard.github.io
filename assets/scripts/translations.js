@@ -45,7 +45,7 @@ const TRANSLATIONS = {
     "exp.4.t": "Szoftvertesztelő gyakornok — evosoft Hungary Kft.",
 
     "edu.h": "Tanulmányok",
-    "edu.1.t": "PhD, mérnökinformatika — Budapesti Műszaki és Gazdaságtudományi Egyetem",
+    "edu.1.t": "PhD, Informatikai tudományok doktori iskola — Budapesti Műszaki és Gazdaságtudományi Egyetem",
     "edu.1.s": "Kutatási téma: <em>autonóm járművek modern számítógépes látórendszerei</em>.",
     "edu.2.t": "MSc, villamosmérnök — Budapesti Műszaki és Gazdaságtudományi Egyetem",
     "edu.2.s": "Diplomaterv: <em>mélytanuláson alapuló SLAM-algoritmus fejlesztése</em>.",
@@ -56,7 +56,6 @@ const TRANSLATIONS = {
     "teach.1": "Képfeldolgozás gyakorlatok BSc hallgatóknak",
     "teach.2": "Számítógépes látás laborok MSc hallgatóknak",
     "teach.3": "BSc és MSc szakdolgozatok témavezetése mecanum-kerekű mobilrobot digitális ikerpárjáról, Nvidia Isaac Sim és Isaac Lab használatával",
-    "teach.4": "A <a href=\"https://github.com/VisionLab-IIT/research-project-example\">research-project-example</a> egyedüli szerzője — oktatóanyag a kutatási projektek felépítéséről",
 
     "skills.h": "Szakmai készségek",
     "skills.1.l": "Programozás",
@@ -70,6 +69,7 @@ const TRANSLATIONS = {
     "projects.p": "Apróbb eszközök és forkok, amelyeket a kutatómunkán kívül gondozok.",
     "projects.mathcode": "MathCode — a kódban lévő operátorokat és indexelt változóneveket csinos matematikai szimbólumokként jeleníti meg, a fájl tartalmának módosítása nélkül",
     "projects.da3": "Depth Anything 3 (fork) — egyszerűsítés, apróbb hibajavítások és dokumentáció",
+    "projects.example": "research-project-example — egyedüli szerző, oktatóanyag a kutatási projektek felépítéséről",
 
     "notes.h": "Interaktív jegyzetek",
     "notes.p": "Vizuális magyarázók, amelyeket gondolkodás közben készítek — WebGL-lel, élőben a böngészőben. Asztali gépen, egérrel és billentyűzettel a legjobb.",
@@ -123,7 +123,6 @@ const TRANSLATIONS = {
     "teach.1": "画像処理演習（学部生向け）",
     "teach.2": "コンピュータビジョン実験（修士課程向け）",
     "teach.3": "Nvidia Isaac SimおよびIsaac Labを用いた、メカナムホイール移動ロボットのデジタルツインに関する学士・修士論文の指導",
-    "teach.4": "研究プロジェクトの構成に関するチュートリアルリポジトリ <a href=\"https://github.com/VisionLab-IIT/research-project-example\">research-project-example</a> の単独著者",
 
     "skills.h": "技術スキル",
     "skills.1.l": "プログラミング",
@@ -137,6 +136,7 @@ const TRANSLATIONS = {
     "projects.p": "研究活動とは別に維持している、小さなツールとフォークです。",
     "projects.mathcode": "MathCode — コード中の演算子と添字付き変数名を、ファイルの内容を変更することなく、美しい数式記号として表示します",
     "projects.da3": "Depth Anything 3（フォーク）— 簡略化、細かなバグ修正、ドキュメント整備",
+    "projects.example": "research-project-example — 単独著者、研究プロジェクトの構成に関するチュートリアルリポジトリ",
 
     "notes.h": "インタラクティブ・ノート",
     "notes.p": "考えを整理しながら作っている視覚的な解説です。WebGLでブラウザ上に描画されます。マウスとキーボードのあるデスクトップ環境での閲覧を推奨します。",
